@@ -1,0 +1,18 @@
+[package]
+name = "codeshot"
+version = "0.1.0"
+authors = ["ltoddy <taoliu0509@gmail.com>"]
+edition = "2018"
+description = "code shot!"
+keywords = ["image", "terminal"]
+readme = "README.md"
+license = "GPL-3.0"
+homepage = "https://github.com/ltoddy/codeshot"
+repository = "https://github.com/ltoddy/codeshot"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+structopt = "0.3"
+image = "0.23"
