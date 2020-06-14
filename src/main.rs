@@ -3,7 +3,7 @@ mod error;
 mod options;
 
 use std::fs::File;
-use std::io::Read;
+use std::io::{BufRead, BufReader};
 use std::path::Path;
 
 use image::{ImageBuffer, Rgb};
@@ -26,12 +26,12 @@ fn main() {
 
 pub fn read_file<P: AsRef<Path>>(filename: P, color: Color) -> Result<()> {
     let filename = filename.as_ref();
+    let reader = BufReader::new(File::open(filename)?);
+    let lines = reader
+        .lines()
+        .filter_map(std::result::Result::ok)
+        .collect::<Vec<String>>();
 
-    let mut file = File::open(filename)?;
-    let mut s = String::new();
-    file.read_to_string(&mut s)?;
-
-    let lines = s.lines().collect::<Vec<_>>();
     let height = (lines.len() as u32) * 16;
     let width = (lines.iter().fold(0, |acc, x| if acc < x.len() { x.len() } else { acc }) as u32) * 7;
 
