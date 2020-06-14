@@ -2,9 +2,14 @@ use std::path::PathBuf;
 
 use structopt::StructOpt;
 
+use crate::color::Color;
+
 #[derive(StructOpt, Debug)]
 #[structopt(name = "code shot!", author = "ltoddy <taoliu0509@gmail.com>")]
-pub(crate) struct Options {
+pub struct Options {
     #[structopt(name = "path", parse(from_os_str))]
-    pub(crate) filename: PathBuf,
+    pub filename: PathBuf,
+
+    #[structopt(name = "color", long = "color", default_value = "AliceBlue")]
+    pub color: Color,
 }
