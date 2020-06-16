@@ -15,4 +15,6 @@ repository = "https://github.com/ltoddy/codeshot"
 
 [dependencies]
 structopt = "0.3"
-image = "0.23"
+image = "0.23.0"
+imageproc = "0.20.0"
+rusttype = "0.8.2"

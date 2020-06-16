@@ -7,6 +7,8 @@ use std::io::{BufRead, BufReader};
 use std::path::Path;
 
 use image::{ImageBuffer, Rgb};
+use imageproc::drawing::draw_text_mut;
+use rusttype::{Font, Scale};
 use structopt::StructOpt;
 
 use crate::color::Color;
@@ -38,7 +40,15 @@ pub fn read_file<P: AsRef<Path>>(filename: P, color: Color) -> Result<()> {
     println!("image, width: {}, height: {}, color: {}", width, height, color);
 
     let mut imgbuf = ImageBuffer::new(width, height);
+
+    let font = Vec::from(include_bytes!("DejaVuSans.ttf") as &[u8]);
+    let font = Font::from_bytes(&font).unwrap();
+
+    let scale = Scale { x: 40.0, y: 20.0 };
+
     padding_background(&mut imgbuf, color);
+
+    draw_text_mut(&mut imgbuf, Rgb([0u8, 0u8, 255u8]), 0, 0, scale, &font, "Hello, world!");
     imgbuf.save("error.png").unwrap();
 
     Ok(())
