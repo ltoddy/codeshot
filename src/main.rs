@@ -34,8 +34,8 @@ pub fn read_file<P: AsRef<Path>>(filename: P, color: Color) -> Result<()> {
         .filter_map(std::result::Result::ok)
         .collect::<Vec<String>>();
 
-    let height = (lines.len() as u32) * 16;
-    let width = (lines.iter().fold(0, |acc, x| if acc < x.len() { x.len() } else { acc }) as u32) * 7;
+    let height = ((lines.len() + 1) as u32) * 20;
+    let width = (lines.iter().fold(0, |acc, x| if acc < x.len() { x.len() } else { acc }) as u32) * 10;
 
     println!("image, width: {}, height: {}, color: {}", width, height, color);
 
@@ -44,11 +44,12 @@ pub fn read_file<P: AsRef<Path>>(filename: P, color: Color) -> Result<()> {
     let font = Vec::from(include_bytes!("DejaVuSans.ttf") as &[u8]);
     let font = Font::from_bytes(&font).unwrap();
 
-    let scale = Scale { x: 40.0, y: 20.0 };
+    let scale = Scale { x: 20.0, y: 20.0 };
 
     padding_background(&mut imgbuf, color);
-
-    draw_text_mut(&mut imgbuf, Rgb([0u8, 0u8, 255u8]), 0, 0, scale, &font, "Hello, world!");
+    for (index, line) in lines.iter().enumerate() {
+        draw_text_mut(&mut imgbuf, Rgb([0u8, 0u8, 255u8]), 0, (index * 20) as u32, scale, &font, &line);
+    }
     imgbuf.save("error.png").unwrap();
 
     Ok(())
