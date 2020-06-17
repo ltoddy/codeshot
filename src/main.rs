@@ -32,6 +32,7 @@ pub fn read_file<P: AsRef<Path>>(filename: P, color: Color) -> Result<()> {
     let lines = reader
         .lines()
         .filter_map(std::result::Result::ok)
+        .map(|line: String| line.replace("\t", "    "))
         .collect::<Vec<String>>();
 
     let height = ((lines.len() + 1) as u32) * 20;
@@ -41,7 +42,7 @@ pub fn read_file<P: AsRef<Path>>(filename: P, color: Color) -> Result<()> {
 
     let mut imgbuf = ImageBuffer::new(width, height);
 
-    let font = Vec::from(include_bytes!("DejaVuSans.ttf") as &[u8]);
+    let font = Vec::from(include_bytes!("Monaco.ttf") as &[u8]);
     let font = Font::from_bytes(&font).unwrap();
 
     let scale = Scale { x: 20.0, y: 20.0 };
