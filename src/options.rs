@@ -12,4 +12,10 @@ pub struct Options {
 
     #[structopt(name = "color", long = "color", default_value = "AliceBlue")]
     pub color: Color,
+
+    #[structopt(name = "start", long = "start")]
+    pub start: Option<usize>,
+
+    #[structopt(name = "end", long = "end")]
+    pub end: Option<usize>,
 }
